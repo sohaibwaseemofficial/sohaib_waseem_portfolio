@@ -15,32 +15,37 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sohaib Waseem — Mechanical Engineer & Builder",
+  metadataBase: new URL("https://sohaibwaseemportfolio.vercel.app"),
+  title: "Sohaib Waseem — Mechanical Engineer & AI Software Builder",
   description:
-    "Portfolio of Sohaib Waseem — a mechanical engineering graduate who builds in metal, in code, and in the rooms where ideas get organized. CFD, HVAC design, AI-powered systems, and creative leadership.",
+    "Portfolio of Sohaib Waseem — Mechanical Engineering graduate from NED University. Precision CAD kinematics, CFD aerodynamic & thermal simulation, AI predictive maintenance telemetry, and creative leadership.",
   keywords: [
     "Sohaib Waseem",
-    "mechanical engineer",
-    "CFD",
+    "Mechanical Engineer",
+    "CFD Simulation",
     "ANSYS Fluent",
-    "HVAC design",
-    "AI preventive maintenance",
-    "portfolio",
+    "AI Preventive Maintenance",
+    "PyTorch",
+    "Vibration FFT",
+    "SolidWorks CAD",
+    "Azaad Khayal",
     "NED University",
   ],
   authors: [{ name: "Sohaib Waseem" }],
   openGraph: {
-    title: "Sohaib Waseem — Mechanical Engineer & Builder",
+    title: "Sohaib Waseem — Mechanical Engineer & AI Software Builder",
     description:
       "A mechanical engineer who builds — in metal, in code, and in the rooms where ideas get organized.",
     type: "website",
     locale: "en_US",
+    images: ["/assets/hero-actuator.jpg"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sohaib Waseem — Mechanical Engineer & Builder",
+    title: "Sohaib Waseem — Mechanical Engineer & AI Software Builder",
     description:
       "A mechanical engineer who builds — in metal, in code, and in the rooms where ideas get organized.",
+    images: ["/assets/hero-actuator.jpg"],
   },
 };
 
@@ -53,9 +58,11 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable}`}
-      style={{ backgroundColor: "#0B0D0F" }}
+      style={{ backgroundColor: "#07090D" }}
     >
-      <body className="antialiased">{children}</body>
+      <body className="antialiased bg-[#07090D] text-[#F8FAFC] selection:bg-cyan-500/30 selection:text-white">
+        {children}
+      </body>
     </html>
   );
 }

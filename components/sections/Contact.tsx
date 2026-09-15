@@ -1,225 +1,186 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatedSection } from "@/components/ui/AnimatedSection";
-import { Button } from "@/components/ui/Button";
-
-const EMAIL = "sohaibwaseem@example.com"; // ← Replace with real email
+import React, { useState } from "react";
+import { Mail, Copy, Check, Send, Terminal, Sparkles, ArrowUpRight } from "lucide-react";
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const emailAddress = "sohaibwaseemofficial@gmail.com";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(emailAddress);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // mailto fallback — opens email client with pre-filled fields
-    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
   };
 
   return (
-    <section id="contact" className="section-padding border-t border-[#26292C]">
-      <div className="container-max">
-        {/* Section label */}
-        <AnimatedSection>
-          <span
-            className="font-mono text-xs text-[#D68C45] tracking-widest uppercase mb-4 block"
-            style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-          >
-            05 / Contact
-          </span>
-        </AnimatedSection>
+    <section id="contact" className="section-padding relative overflow-hidden bg-[#07090D] border-t border-white/5">
+      {/* Ambient background glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-          {/* Left: copy */}
-          <div>
-            <AnimatedSection delay={0.05}>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#F2F1ED] leading-tight mb-6 copper-underline">
-                Let&#39;s talk.
-              </h2>
-            </AnimatedSection>
+      <div className="container-max relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          {/* Left Column: Direct Info & Availability */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full badge-glow">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 beacon-live" />
+              <span className="font-mono text-xs text-emerald-300 font-semibold tracking-wide">
+                CURRENTLY OPEN TO ROLES & COLLABORATIONS
+              </span>
+            </div>
 
-            <AnimatedSection delay={0.1}>
-              <p className="text-[#9B9B93] leading-relaxed mb-8">
-                Whether it&#39;s a mechanical engineering role, an AI/data project, a collaboration,
-                or just a conversation — I&#39;m genuinely interested. Reach out directly or
-                use the form.
-              </p>
-            </AnimatedSection>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+              Let&apos;s build something <br />
+              <span className="text-gradient-cyan">exceptional together.</span>
+            </h2>
 
-            <AnimatedSection delay={0.15} className="flex flex-col gap-4">
-              {/* Email */}
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+              Whether you need mechanical CFD & thermal design, machine learning models for telemetry & predictive systems, or visionary creative direction—my inbox is open.
+            </p>
+
+            {/* Quick action buttons */}
+            <div className="p-4 rounded-xl glass-panel border border-white/10 space-y-3 font-mono text-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Direct Communication:</span>
+                <span className="text-cyan-400">PGP/Verified</span>
+              </div>
+              <div className="flex items-center justify-between p-2.5 rounded-lg bg-black/40 border border-white/5">
+                <span className="text-slate-200 font-medium truncate mr-2">
+                  {emailAddress}
+                </span>
+                <button
+                  onClick={handleCopyEmail}
+                  className="px-3 py-1.5 rounded bg-white/10 hover:bg-white text-white hover:text-black transition-all flex items-center gap-1.5 shrink-0 cursor-pointer font-semibold"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? "Copied!" : "Copy"}</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
               <a
-                href={`mailto:${EMAIL}`}
-                id="contact-email-link"
-                className="flex items-center gap-4 p-4 border border-[#26292C] rounded-sm bg-[#14171A] hover:border-[#D68C45]/40 group transition-colors duration-200"
+                href={`mailto:${emailAddress}`}
+                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs font-mono transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/20"
               >
-                <div className="w-8 h-8 flex items-center justify-center border border-[#26292C] rounded-sm group-hover:border-[#D68C45]/40 transition-colors duration-200">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M2 4a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4zm0 0l6 5 6-5"
-                      stroke="#D68C45"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p
-                    className="font-mono text-[10px] text-[#9B9B93] tracking-widest uppercase mb-0.5"
-                    style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-                  >
-                    Email
-                  </p>
-                  <p className="text-sm text-[#F2F1ED] group-hover:text-[#D68C45] transition-colors duration-150">
-                    {EMAIL}
-                  </p>
-                </div>
+                <Mail className="w-4 h-4" />
+                <span>Send Email Directly</span>
               </a>
 
-              {/* LinkedIn */}
               <a
                 href="https://linkedin.com/in/sohaibwaseem"
                 target="_blank"
                 rel="noopener noreferrer"
-                id="contact-linkedin-link"
-                className="flex items-center gap-4 p-4 border border-[#26292C] rounded-sm bg-[#14171A] hover:border-[#D68C45]/40 group transition-colors duration-200"
+                className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs font-mono transition-all flex items-center gap-2 border border-white/10"
               >
-                <div className="w-8 h-8 flex items-center justify-center border border-[#26292C] rounded-sm group-hover:border-[#D68C45]/40 transition-colors duration-200">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="#D68C45">
-                    <path d="M13.5 1.5h-11A1 1 0 001.5 2.5v11A1 1 0 002.5 14.5h11a1 1 0 001-1v-11a1 1 0 00-1-1zM5.5 12.5H3.5v-6h2v6zM4.5 5.5a1 1 0 110-2 1 1 0 010 2zM12.5 12.5h-2V9.25c0-.69-.56-1.25-1.25-1.25S8 8.56 8 9.25v3.25H6v-6h2v.77A2.5 2.5 0 0112.5 9v3.5z" />
-                  </svg>
-                </div>
-                <div>
-                  <p
-                    className="font-mono text-[10px] text-[#9B9B93] tracking-widest uppercase mb-0.5"
-                    style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-                  >
-                    LinkedIn
-                  </p>
-                  <p className="text-sm text-[#F2F1ED] group-hover:text-[#D68C45] transition-colors duration-150">
-                    linkedin.com/in/sohaibwaseem
-                  </p>
-                </div>
+                <svg className="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.75c-.96 0-1.74.78-1.74 1.74s.78 1.74 1.74 1.74 1.74-.78 1.74-1.74-.78-1.74-1.74-1.74Z" />
+                </svg>
+                <span>LinkedIn Profile</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
               </a>
-            </AnimatedSection>
+            </div>
           </div>
 
-          {/* Right: form */}
-          <AnimatedSection delay={0.1}>
-            {submitted ? (
-              <div className="border border-[#D68C45]/30 rounded-sm p-8 bg-[#D68C45]/5 flex flex-col items-center justify-center text-center gap-4 min-h-64">
-                <div className="w-10 h-10 rounded-full border border-[#D68C45] flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M4 9l4 4 6-7" stroke="#D68C45" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+          {/* Right Column: Terminal-Grade Direct Message Card */}
+          <div className="lg:col-span-7">
+            <div className="p-6 sm:p-8 rounded-2xl glass-panel border border-white/10 shadow-2xl">
+              <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10">
+                <div className="flex items-center gap-2">
+                  <Terminal className="w-4 h-4 text-cyan-400" />
+                  <span className="font-mono text-xs text-slate-200 font-bold tracking-wider">
+                    TRANSMIT MESSAGE DOSSIER
+                  </span>
                 </div>
-                <p className="text-[#F2F1ED] font-medium">Email client opened.</p>
-                <p className="text-sm text-[#9B9B93]">
-                  Your message is pre-filled and ready to send.
-                </p>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                </div>
               </div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-4"
-                id="contact-form"
-              >
-                <div>
-                  <label
-                    htmlFor="contact-name"
-                    className="font-mono text-[10px] text-[#9B9B93] tracking-widest uppercase block mb-2"
-                    style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-                  >
-                    Name
-                  </label>
-                  <input
-                    id="contact-name"
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-[#14171A] border border-[#26292C] rounded-sm px-4 py-3 text-sm text-[#F2F1ED] placeholder:text-[#9B9B93]/40 focus:outline-none focus:border-[#D68C45]/60 transition-colors duration-150"
-                    placeholder="Your name"
-                  />
+
+              <form onSubmit={handleFormSubmit} className="space-y-4 font-mono text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-400 mb-1.5 uppercase tracking-wider">
+                      Sender Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Jane Doe"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-cyan-400 focus:outline-none transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-slate-400 mb-1.5 uppercase tracking-wider">
+                      Sender Email
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="jane@organization.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-cyan-400 focus:outline-none transition-colors"
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="contact-email"
-                    className="font-mono text-[10px] text-[#9B9B93] tracking-widest uppercase block mb-2"
-                    style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-                  >
-                    Email
-                  </label>
-                  <input
-                    id="contact-email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-[#14171A] border border-[#26292C] rounded-sm px-4 py-3 text-sm text-[#F2F1ED] placeholder:text-[#9B9B93]/40 focus:outline-none focus:border-[#D68C45]/60 transition-colors duration-150"
-                    placeholder="you@example.com"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="font-mono text-[10px] text-[#9B9B93] tracking-widest uppercase block mb-2"
-                    style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-                  >
-                    Message
+                  <label className="block text-slate-400 mb-1.5 uppercase tracking-wider">
+                    Project Brief / Message
                   </label>
                   <textarea
-                    id="contact-message"
+                    rows={4}
                     required
-                    rows={5}
+                    placeholder="Describe your engineering project, role opportunity, or creative collaboration..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-[#14171A] border border-[#26292C] rounded-sm px-4 py-3 text-sm text-[#F2F1ED] placeholder:text-[#9B9B93]/40 focus:outline-none focus:border-[#D68C45]/60 transition-colors duration-150 resize-none"
-                    placeholder="What's on your mind?"
+                    className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-cyan-400 focus:outline-none transition-colors resize-none"
                   />
                 </div>
 
-                <Button id="contact-submit" variant="primary" className="w-full justify-center">
-                  Send Message
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </Button>
-
-                <p className="text-xs text-[#9B9B93]/50 text-center">
-                  Opens your email client with this message pre-filled.
-                </p>
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-xl bg-white hover:bg-slate-200 text-black font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-white/10"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Transmit Transmission via Mail</span>
+                </button>
               </form>
-            )}
-          </AnimatedSection>
+            </div>
+          </div>
+
         </div>
 
-        {/* Footer */}
-        <AnimatedSection delay={0.2}>
-          <div className="mt-16 pt-8 border-t border-[#26292C] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-[#9B9B93]/50">
-              © {new Date().getFullYear()} Sohaib Waseem. All rights reserved.
-            </p>
-            <p
-              className="font-mono text-[11px] text-[#9B9B93]/40 tracking-wider"
-              style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-            >
-              Built with Next.js · Tailwind CSS · Framer Motion
-            </p>
+        {/* Footer Bar */}
+        <div className="pt-16 mt-16 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-cyan-400" />
+            <span className="text-slate-400 font-medium">
+              Sohaib Waseem • Mechanical Engineer & Builder
+            </span>
           </div>
-        </AnimatedSection>
+          <div className="flex items-center gap-6">
+            <span>NED University of Engineering & Technology</span>
+            <span className="text-slate-600">•</span>
+            <span>Karachi, Pakistan</span>
+          </div>
+        </div>
       </div>
     </section>
   );
